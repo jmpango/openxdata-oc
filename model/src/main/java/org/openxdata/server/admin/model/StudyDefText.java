@@ -1,8 +1,15 @@
 package org.openxdata.server.admin.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class contains text for a study in a given locale.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "studyDefText")
 public class StudyDefText extends AbstractEditable{
 
 	/**
@@ -11,18 +18,23 @@ public class StudyDefText extends AbstractEditable{
 	private static final long serialVersionUID = -4438293413015913822L;
 
 	/** The database identifier for the study text. */
+	@XmlElement
 	private int studyTextId = 0;
 	
 	/** The database identifier for the study whose text we contain. */
+	@XmlElement
 	private int studyId;
 	
 	/** The locale key for this study text. */
+	@XmlElement
 	private String localeKey;
 	
 	/** The name of the study in the locale specified by the localKey field. */
+	@XmlElement
 	private String name;
 	
 	/** The description of the study in the locale specified in the localeKey field. */
+	@XmlElement
 	private String description;
 	
 	/**

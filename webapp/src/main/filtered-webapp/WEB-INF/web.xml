@@ -249,6 +249,19 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
 		<url-pattern>/emit/openclinica</url-pattern>
 	</servlet-mapping>
   
+    <servlet>
+		<servlet-name>Rest-servlet</servlet-name>
+		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>
+		<init-param>
+			<param-name>com.sun.jersey.config.property.packages</param-name>
+			<param-value>org.openxdata.server.webservices</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Rest-servlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
+  
   <!-- hide .jsp from the url (hides the technology from the user) -->
   <servlet>
     <servlet-name>login.jsp</servlet-name>

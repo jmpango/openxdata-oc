@@ -1,5 +1,10 @@
 package org.openxdata.server.admin.model.mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openxdata.server.admin.model.AbstractEditable;
 import org.openxdata.server.admin.model.StudyDef;
 import org.openxdata.server.admin.model.User;
@@ -7,9 +12,14 @@ import org.openxdata.server.admin.model.User;
 /**
  * Maps a <code>Study</code> to a <code>User</code>.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "userStudyMap")
 public class UserStudyMap extends AbstractEditable {
 
+	@XmlElement
 	private int	userId;
+	
+	@XmlElement
 	private int	studyId;
 	private static final long serialVersionUID = 2870582564160870766L;
 

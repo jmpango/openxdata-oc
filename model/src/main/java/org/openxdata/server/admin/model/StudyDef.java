@@ -4,26 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sun.xml.internal.bind.CycleRecoverable;
+
 /**
  * This class encapsulates all form definitions of a particular study.
  */
-public class StudyDef extends AbstractEditable implements Exportable {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "studyDef")
+public class StudyDef extends AbstractEditable implements Exportable, CycleRecoverable{
 	
 	private static final long serialVersionUID = -8072038229430076563L;
 
+	@XmlElement
 	private String name;
 	
+	@XmlElement
 	private String description;
 	
+	@XmlElement
 	private String studyKey;
 		
 	/** A list of form definitions (FormDef) in the the study. */
+	@XmlElementWrapper(name = "forms", required = false)
+	@XmlElement(name = "form", type = FormDef.class)
 	private List<FormDef> forms;
 	
 	/** A list of the study text for different locales. */
+	@XmlElementWrapper(name = "studyDefTexts", required = false)
+	@XmlElement(name = "studyDefText", type = StudyDefText.class)
 	private List<StudyDefText> text;
 	
 	/** A list of users who have permission to this study */
+	@XmlElementWrapper(name = "users", required = false)
+	@XmlElement(name = "user", type = Role.class)
 	private List<User> users;
 		
 	public StudyDef() {
@@ -219,5 +238,15 @@ public class StudyDef extends AbstractEditable implements Exportable {
 	@Override
 	public String getType() {
 		return "study";
+	}
+	
+	/** 
+	 * Used by JAXB when a cycle is detected in this object graph.
+	 */
+	@Override
+	public StudyDef onCycleDetected(Context context) {
+		StudyDef replacement = new StudyDef();
+		replacement.setId(this.getId());
+		return replacement;
 	}
 }

@@ -1,4 +1,5 @@
 <module>    
       <!-- Source paths -->  
 	  <source path="model" />
+	  <super-source path="jre" />
 </module>

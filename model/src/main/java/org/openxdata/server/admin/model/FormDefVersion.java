@@ -3,28 +3,48 @@ package org.openxdata.server.admin.model;
 import java.util.List;
 import java.util.Vector;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sun.xml.internal.bind.CycleRecoverable;
+
 /**
  * The form definition version. For each form defined, we can have many versions to support
  * changing of form definition without breaking already collected data.
  */
-public class FormDefVersion extends AbstractEditable implements Exportable {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "formDefVersion")
+public class FormDefVersion extends AbstractEditable implements Exportable, CycleRecoverable {
 
 	private static final long serialVersionUID = 3882276404608627490L;
 
 	/** The display name of the form version. */
+	@XmlElement
 	private String name;
 	
 	/** Description of the form version. */
+	@XmlElement
 	private String description;
 		
 	/** The form definition whose version we represent. */
+	@XmlElement(name = "formDef", type = FormDef.class)
 	private FormDef formDef;
 	
+	@XmlElement
 	private String xform;
+	
+	@XmlElement
 	private String layout;
+	
+	@XmlElement
 	private Boolean isDefault = true;
 	
 	/** A list of the form text for different locales. */
+	@XmlElementWrapper(name = "formDefVersionTexts", required = false)
+	@XmlElement(name = "formDefVersionText", type = FormDefVersionText.class)
 	private List<FormDefVersionText> versionText;
 	
 	public FormDefVersion() {
@@ -166,5 +186,14 @@ public class FormDefVersion extends AbstractEditable implements Exportable {
 	@Override
 	public String getType() {
 		return "version";
+	}
+	
+	/** 
+	 * this method is called by JAXB when a cycle is detected
+	 */
+	public FormDefVersion onCycleDetected(Context arg0) {
+		FormDefVersion replacement = new FormDefVersion();
+		replacement.setId(this.getId());		
+		return replacement;
 	}
 }

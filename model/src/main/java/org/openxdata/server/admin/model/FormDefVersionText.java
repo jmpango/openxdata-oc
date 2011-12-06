@@ -1,21 +1,30 @@
 package org.openxdata.server.admin.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class represents locale text of a form version.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "formDefVersionText")
 public class FormDefVersionText extends AbstractEditable{
 
 	private static final long serialVersionUID = -8844252387415837817L;
 	
 	/** The key of the locale. */
+	@XmlElement
 	private String localeKey;
 	
 	/** The locale text for the xform as per the localeKey field. */
+	@XmlElement
 	private String xformText;
 	
 	/** The locale text for the layout xml as per the localeKey field. */
+	@XmlElement
 	private String layoutText;
-	
 	public FormDefVersionText() {
 	}
 	

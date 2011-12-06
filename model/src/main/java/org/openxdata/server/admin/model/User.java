@@ -4,72 +4,103 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sun.xml.internal.bind.CycleRecoverable;
+
 /**
  * This class is used to represent a user who can access the system.
  */
-public class User extends AbstractEditable {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "user")
+public class User extends AbstractEditable implements CycleRecoverable {
 
 	private static final long serialVersionUID = -410052012755451028L;
 	
+	@XmlElement
 	private String name;
 	
+	@XmlElement
 	private String firstName;
 	
+	@XmlElement
 	private String middleName;
 	
+	@XmlElement
 	private String lastName;
 	
 	/** The user hashed password. */
+	@XmlElement
 	private String password;
 	
 	/** The salt used to hash the user's password. */
+	@XmlElement
 	private String salt;
 	
+	@XmlElement
 	private String secretQuestion;
 	
+	@XmlElement
 	private String secretAnswer;
 	
 	/** The user's phone number. For now, this is used for optionally adding another
 	 * security level for user's who try to submit data using sms.
 	 */
+	@XmlElement
 	private String phoneNo;
 	
 	/** The List of roles that the user has. */
+	@XmlElementWrapper(name = "roles", required = false)
+	@XmlElement(name = "role", type = Role.class)
 	private Set<Role> roles;
 	
 	/** A flag which is set to true when the user cannot be allowed any longer to access
 	 * the system. Such users are not deleted because their id's may be referenced as 
 	 * foreign keys in some other tables.
 	 */
+	@XmlElement(name = "voided")
 	private Boolean voided = false;
 	
 	/** The user who made this user voided. */
+	@XmlElement(name = "voidedBy", type = User.class)
 	private User voidedBy;
 	
 	/** The date when this user was voided. */
+	@XmlElement
 	private Date dateVoided;
 	
 	/** The reason why this user was voided. */
+	@XmlElement
 	private String voidReason;
 	
 	/**
 	 * The user's clear text password.
 	 * This is just a means of transfer to the service layer because it's never persisted.
 	 */
+	@XmlElement
 	private String clearTextPassword;
 	
+	@XmlElement
 	private String email;
 	
 	/** Flag to determine if <code>User</code> is disabled or not*/
+	@XmlElement
 	private int status = 0;
 	
 	/** Models an active <code>User</code> */
+	@XmlElement
 	public static final int ACTIVE = 0;
 	
 	/** Models a disabled <code>User</code>*/
+	@XmlElement
 	public static final int DISABLED = 1;
 	
 	/** Models a new <code>User</code> pending approval*/
+	@XmlElement
 	public static final int PENDING_APPROVAL = 2;
 		
 	public User(){
@@ -440,4 +471,13 @@ public class User extends AbstractEditable {
     		return false;
     	}
     }
+    
+    /** 
+	 * Used by JAXB when an object cyclic redundancy is detected in this class.
+	 */
+	public User onCycleDetected(Context context) {
+		User replacement = new User();
+		replacement.setId(this.getId());
+		return replacement;
+	}
 }

@@ -1,5 +1,10 @@
 package org.openxdata.server.admin.model;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class encapsulates a permission 
  * which can be used to restrict the level of access in <code>openXData</code>. 
@@ -9,14 +14,18 @@ package org.openxdata.server.admin.model;
  * Delete Form Data, Create New Studies, Export Data, Export Study </code>.
  * </P>
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "permission")
 public class Permission extends AbstractEditable {
 	
 	private static final long serialVersionUID = 4590744588070449021L;
 	
 	/** The name of the permission. */
+	@XmlElement
 	private String name;
 	
 	/** The description of the permission. */
+	@XmlElement
 	private String description;
 
 

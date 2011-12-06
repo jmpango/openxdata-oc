@@ -4,6 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+
+import com.sun.xml.internal.bind.CycleRecoverable;
+
 /**
  * Definition of a form. This has some meta data about the form definition and  
  * a collection of pages together with question branching or skipping rules.
@@ -12,26 +20,37 @@ import java.util.Vector;
  * changing of a form language in order to have a more efficient implementation
  * as a trade off for more flexibility which may not be used most of the times.
  */
-public class FormDef extends AbstractEditable implements Exportable {
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "formDef")
+public class FormDef extends AbstractEditable implements Exportable, CycleRecoverable {
 
 	private static final long serialVersionUID = -2422751217356938584L;
 
 	/** The display name of the form. */
+	@XmlElement
 	private String name;
 	
 	/** Description of the form. */
+	@XmlElement
 	private String description;
 		
 	/** The study to which the form is attached. */
+	@XmlElement
 	private StudyDef study;
 	
 	/** A list of the form versions. */
+	@XmlElementWrapper(name = "formDefVersions", required = false)
+	@XmlElement(name = "formDefVersion", type = FormDefVersion.class)
 	private List<FormDefVersion> versions;
 	
 	/** A list of users who have permission to work on this form */
+	@XmlElementWrapper(name = "users", required = false)
+	@XmlElement(name = "user", type = User.class)
 	private List<User> users;
 	
 	/** A list of the study text for different locales. */
+	@XmlElementWrapper(name = "formDefTexts", required = false)
+	@XmlElement(name = "formDefText", type = FormDefText.class)
 	private List<FormDefText> text;
 	
 	public FormDef() {
@@ -277,5 +296,14 @@ public class FormDef extends AbstractEditable implements Exportable {
 			}
 		} while (duplicate);
 		return versionName;
+	}
+	
+	/**
+	 * this method is called by JAXB when an object cycle is detected 
+	 */
+	public FormDef onCycleDetected(Context arg0) {
+		FormDef replacement = new FormDef();
+		replacement.setId(this.getId());		
+		return replacement;
 	}
 }

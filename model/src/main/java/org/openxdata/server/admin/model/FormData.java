@@ -2,9 +2,16 @@ package org.openxdata.server.admin.model;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * This class hold data which has been collected for a form.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "formData")
 public class FormData extends AbstractEditable {
 
 	private static final long serialVersionUID = 6183444597939766009L;
@@ -13,9 +20,11 @@ public class FormData extends AbstractEditable {
 	 * The numeric unique identifier for the version of the form that this data
 	 * belongs to.
 	 */
+	@XmlElement
 	private Integer formDefVersionId;
 
 	/** The xml data. */
+	@XmlElement
 	private String data;
 
 	/**
@@ -23,11 +32,13 @@ public class FormData extends AbstractEditable {
 	 * has which data without having to first open them one by one and check the
 	 * data.
 	 */
+	@XmlElement
 	private String description;
 
 	/** Bitwise flag to indicate if the data has been exported. */
+	@XmlElement
 	private Integer exported = 0;
-
+	
 	public FormData() {
 
 	}

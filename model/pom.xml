@@ -69,6 +69,15 @@
                     <artifactId>trove</artifactId>
                     <groupId>trove</groupId>
                 </exclusion>
+                <!-- Causes conflicts with jesery -->
+                <exclusion>
+                    <artifactId>asm</artifactId>
+                    <groupId>asm</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>cglib</artifactId>
+                    <groupId>cglib</groupId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>

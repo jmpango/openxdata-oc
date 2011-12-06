@@ -1,5 +1,10 @@
 package org.openxdata.server.admin.model.mapping;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.openxdata.server.admin.model.AbstractEditable;
 import org.openxdata.server.admin.model.FormDef;
 import org.openxdata.server.admin.model.User;
@@ -7,9 +12,14 @@ import org.openxdata.server.admin.model.User;
 /**
  * Maps <code>Forms</code> to <code>User</code>.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "userFormMap")
 public class UserFormMap extends AbstractEditable {
 
+	@XmlElement
 	private int userId;
+	
+	@XmlElement
 	private int formId;
 	
 	private static final long serialVersionUID = 4366549281586602840L;
