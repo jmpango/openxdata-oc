@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.openxdata.oc.model.ConvertedOpenclinicaStudy;
 import org.openxdata.oc.transport.OpenClinicaSoapClient;
-import org.openxdata.oc.transport.factory.ConnectionURLFactory;
 import org.openxdata.oc.transport.impl.OpenClinicaSoapClientImpl;
 import org.openxdata.server.admin.model.FormData;
 import org.openxdata.server.admin.model.FormDef;
@@ -59,7 +58,6 @@ public class OpenclinicaServiceImpl implements OpenclinicaService {
 			
 			log.info("OXD: Initializing client for first time use.");
 			
-			String host = settingDAO.getSetting("openClinicaWebServiceHost");
 			String userName = settingDAO.getSetting("OpenClinicaUserName");
 			String password = settingDAO.getSetting("OpenClinicaUserHashedPassword");
 			

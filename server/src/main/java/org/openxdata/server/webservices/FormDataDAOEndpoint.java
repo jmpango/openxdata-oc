@@ -10,11 +10,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.MediaType;
 
 import org.openxdata.server.admin.model.FormData;
 import org.openxdata.server.admin.model.FormDataVersion;
-import org.openxdata.server.admin.model.FormDef;
 import org.openxdata.server.dao.FormDataDAO;
 import org.openxdata.server.security.RestEndpointSecurity;
 import org.openxdata.server.util.HibernateProxyUtil;
